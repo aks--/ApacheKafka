@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!--producer config -->
+<bean id="producerProps" class="java.util.HashMap">
+    <constructor-arg>
+        <map key-type="java.lang.String" value-type="java.lang.String">
+            <entry key="bootstrap.servers" value="localhost:9092"/>
+            <entry key="acks" value="all"/>
+            <entry key="retries" value="0"/>
+            <entry key="batch.size" value="16384"/>
+            <entry key="linger.ms" value="1"/>
+            <entry key="buffer.memory" value="33554432"/>
+            <entry key="key.serializer" value="org.apache.kafka.common.serialization.StringSerializer"/>
+            <entry key="value.serializer" value="org.apache.kafka.common.serialization.StringSerializer"/>
+        </map>
+    </constructor-arg>
+</bean>
+<bean id="producerFactory" class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
+    <constructor-arg ref="producerProps"/>
+</bean>
+<bean id="kafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+    <constructor-arg ref="producerFactory"/>
+</bean>
+
+<!--consumer config-->
+<bean id="consumerProps" class="java.util.HashMap">
+    <constructor-arg >
+        <map>
+            <entry key="bootstrap.servers" value="localhost:9092"/>
+            <entry key="group.id" value="consumergroup1"/>
+            <entry key="enable.auto.commit" value="true"/>
+            <entry key="auto.commit.interval.ms" value="1000"/>
+            <entry key="session.timeout.ms" value="30000"/>
+            <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+            <entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+        </map>
+    </constructor-arg>
+</bean>
+<bean id="msglistener" class="springkafka.xmlbased.Listener"/>
+<bean id="containerProps" class="org.springframework.kafka.listener.ContainerProperties">
+    <constructor-arg value="topic1"/>
+    <property name="messageListener" ref="msglistener"/>
+</bean>
+
+<bean id="consumerfactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+    <constructor-arg ref="consumerProps"/>
+</bean>
+<bean id="container"  class="org.springframework.kafka.listener.KafkaMessageListenerContainer" >
+    <constructor-arg ref="consumerfactory"/>
+    <constructor-arg ref="containerProps"/>
+</bean>
+</beans>
