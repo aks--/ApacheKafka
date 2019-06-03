@@ -6,6 +6,7 @@ Local folder:
 C:\anurag\software
 
 1. install and run  zookeeper:
+
 https://zookeeper.apache.org/releases.html
 
 modify conf/zoo.cfg
@@ -14,6 +15,7 @@ add zookeeper/bin (C:\anurag\software\zookeeper-3.4.14\bin) location in PATH Env
 run zkserver
 
 2. install and run  kafka server:
+
 https://kafka.apache.org/downloads
 
 modify  config/server.properties  
@@ -39,8 +41,10 @@ bin\windows\kafka-topics.bat --list --zookeeper localhost:2181
 
 
 5.start producer
+
 bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic Hello-Kafka
 
 6.start consumer
+
 bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic Hello-Kafka --from-beginning
 
