@@ -89,7 +89,7 @@ tar -xvf kafka_2.12-2.2.0.tgz
 3.Create topic:
 
     bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic topic1
-
+    
 4.Delete topic:
 
     bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic topic1
