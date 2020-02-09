@@ -21,6 +21,7 @@ enable.auto.commit default value is true
 else use  consumer.commitAsync() manually to update offset.
 
 enable kafka:
+@EnableKafka enables detection of KafkaListener annotations on any Spring-managed bean in the container
 
 https://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/EnableKafka.html
 
